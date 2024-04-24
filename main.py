@@ -37,14 +37,79 @@ def getText(html):
     return str(soup).strip()
 
 
-def requirements(id):
+# def requirements(id):
 
-    # browser = webdriver.Firefox(
-    #     service=FirefoxService(
-    #         GeckoDriverManager().install()
-    #     )
-    # )
+#     # browser = webdriver.Firefox(
+#     #     service=FirefoxService(
+#     #         GeckoDriverManager().install()
+#     #     )
+#     # )
 
+#     browser = webdriver.Chrome(
+#         service=ChromeService(
+#             ChromeDriverManager().install()
+#         )
+#     )
+#     browser.implicitly_wait(5)
+
+#     browser.get(f"https://standardsmap.org/en/factsheet/{id}/requirements")
+
+#     sleep(25)
+
+#     find_all_h1 = browser.find_elements(
+#         By.TAG_NAME, 'h1'
+#     )[3:]
+
+#     for _ in find_all_h1:
+#         h1_text = _.get_attribute("innerText")
+#         _.find_element(By.TAG_NAME, 'fa-icon').click()
+
+#         sleep(4)
+
+#         find_all_h3 = browser.find_elements(By.TAG_NAME, 'h3')
+
+#         for __ in find_all_h3:
+
+#             # print(__.get_attribute("innerText"))
+
+#             __.find_element(By.TAG_NAME, 'fa-icon').click()
+
+#             print("\t" + __.get_attribute('innerText'))
+
+#             all_column = browser.find_elements(
+#                 By.CSS_SELECTOR, ".d-flex.flex-nowrap.ng-star-inserted"
+#             )
+
+#             for column in all_column:
+
+#                 find_all_a = column.find_elements(
+#                     By.TAG_NAME, 'a'
+#                 )
+
+#                 index = [num
+#                          for num in range(len(find_all_a)) if "more info" in str(find_all_a[num].get_attribute("innerText")).lower().strip()][0]
+
+#                 find_all_a[index].click()
+#                 sleep(2)
+
+#                 single_colum = str(
+#                     column.get_attribute("innerText")).split('\n')
+
+#                 first_4 = single_colum[:4]
+#                 with_out_4 = "\n".join([_ for _ in single_colum[4:] if _][:-1])
+
+#                 # print("\t\t", first_4 + [with_out_4])
+
+#                 sleep(2)
+
+#             sleep(2)
+
+#             __.find_element(By.TAG_NAME, 'fa-icon').click()
+
+#         _.find_element(By.TAG_NAME, 'fa-icon').click()
+
+
+def howToComply(id):
     browser = webdriver.Chrome(
         service=ChromeService(
             ChromeDriverManager().install()
@@ -52,61 +117,32 @@ def requirements(id):
     )
     browser.implicitly_wait(5)
 
-    browser.get(f"https://standardsmap.org/en/factsheet/{id}/requirements")
+    browser.get(f"https://standardsmap.org/en/factsheet/{id}/how-to-comply")
 
-    sleep(25)
+    sleep(10)
 
-    find_all_h1 = browser.find_elements(
-        By.TAG_NAME, 'h1'
-    )[3:]
+    overview = browser.find_element(
+        By.XPATH, "/html/body/app-root/div/div/app-factsheet/app-how-to-comply/div/div[2]/div")
 
-    for _ in find_all_h1:
-        h1_text = _.get_attribute("innerText")
-        _.find_element(By.TAG_NAME, 'fa-icon').click()
+    overview_text = overview.get_attribute("innerText")
 
-        sleep(4)
+    select_all_details = browser.find_elements(
+        By.CSS_SELECTOR, ".d-flex.flex-nowrap.mb-3.pt-3.pb-3.background-color-teal")
 
-        find_all_h3 = browser.find_elements(By.TAG_NAME, 'h3')
+    select_continer = browser.find_elements(
+        By.CSS_SELECTOR, ".container"
+    )[1:5]
 
-        for __ in find_all_h3:
+    # [...document.querySelectorAll('.container')].slice(1, 5)
+    for _num in range(len(select_all_details)):
+        text = select_all_details[_num].get_attribute("innerText")
+        # print(text)
 
-            # print(__.get_attribute("innerText"))
+        select_continer[_num].find_elements(
+            By.TAG_NAME, ".row.pb-3.col-12.ng-star-inserted")
 
-            __.find_element(By.TAG_NAME, 'fa-icon').click()
-
-            print("\t" + __.get_attribute('innerText'))
-
-            all_column = browser.find_elements(
-                By.CSS_SELECTOR, ".d-flex.flex-nowrap.ng-star-inserted"
-            )
-
-            for column in all_column:
-
-                find_all_a = column.find_elements(
-                    By.TAG_NAME, 'a'
-                )
-
-                index = [num
-                         for num in range(len(find_all_a)) if "more info" in str(find_all_a[num].get_attribute("innerText")).lower().strip()][0]
-
-                find_all_a[index].click()
-                sleep(2)
-
-                single_colum = str(
-                    column.get_attribute("innerText")).split('\n')
-
-                first_4 = single_colum[:4]
-                with_out_4 = "\n".join([_ for _ in single_colum[4:] if _][:-1])
-
-                # print("\t\t", first_4 + [with_out_4])
-
-                sleep(2)
-
-            sleep(2)
-
-            __.find_element(By.TAG_NAME, 'fa-icon').click()
-
-        _.find_element(By.TAG_NAME, 'fa-icon').click()
+        sleep(2)
+    # print(overview_text)
 
 
 def overView(id):
@@ -246,10 +282,9 @@ def overView(id):
 
     sleep(1)
 
-    browser.close()
-
     return [heading_text, img_url, description_text, sector_text, product_text, origin,
             description, value_chain_text, lastest_highlights, interesting_facts, year_of_found]
+    browser.close()
 
     select_all_nav_tag[0].click()
     sleep(10)
@@ -318,4 +353,5 @@ def overView(id):
 
 # print(overView(496))
 
-requirements(496)
+# print(overView(496))
+print(howToComply(496))
