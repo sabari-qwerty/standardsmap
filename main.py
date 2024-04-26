@@ -41,7 +41,6 @@ def getText(html):
     return str(soup).strip()
 
 
-
 def requirements(id):
 
     browser = webdriver.Chrome(
@@ -72,7 +71,7 @@ def requirements(id):
 
         _.find_element(By.TAG_NAME, 'fa-icon').click()
 
-        sleep(4)
+        sleep(1)
 
         find_all_h3  = browser.find_elements(By.TAG_NAME, 'h3')
 
@@ -84,39 +83,47 @@ def requirements(id):
             # dic[h1_text] = {
 
             # } 
+            try: 
+                if __.find_element(By.TAG_NAME, 'fa-icon'): 
 
-            __.find_element(By.TAG_NAME, 'fa-icon').click()
+                    __.find_element(By.TAG_NAME, 'fa-icon').click()
 
-            print('\t'+ h3_text)
-
-            sleep(5)
-
-            select_data = browser.find_elements(By.CSS_SELECTOR, '.d-flex.flex-nowrap.ng-star-inserted')
-
-            fin_list = []
-            for _num_ in range(len(select_data)):
-            
-
-
-                # sleep(1)
-
-                select_one  =  select_data[_num_].get_attribute("innerText").split('\n')
-                
-
-                select_list = []
-                if select_one: 
-                    single_colum =  [ data for data in select_one if data ][:-1]
-
-                    first_4 = single_colum[:4]
-                    with_out_4 = "\n".join(single_colum[4:])
-
-                    select_list = first_4 + [with_out_4]
-                
-
-                fin_list.append(select_list)
+                print('\t'+ h3_text)
 
                 sleep(1)
-            __.find_element(By.TAG_NAME, 'fa-icon').click()
+
+                select_data = browser.find_elements(By.CSS_SELECTOR, '.d-flex.flex-nowrap.ng-star-inserted')
+
+                fin_list = []
+                for _num_ in range(len(select_data)):
+                
+
+
+                    # sleep(1)
+
+                    select_one  =  select_data[_num_].get_attribute("innerText").split('\n')
+                    
+
+                    select_list = []
+                    if select_one: 
+                        single_colum =  [ data for data in select_one if data ][:-1]
+
+                        first_4 = single_colum[:4]
+                        with_out_4 = "\n".join(single_colum[4:])
+
+                        select_list = first_4 + [with_out_4]
+                    
+
+                    fin_list.append(select_list)
+
+                    sleep(1)
+
+                if __.find_element(By.TAG_NAME, 'fa-icon'): 
+
+                    __.find_element(By.TAG_NAME, 'fa-icon').click()
+
+            except: 
+                pass
 
             
             _dic[h3_text] = fin_list
@@ -124,7 +131,6 @@ def requirements(id):
         _.find_element(By.TAG_NAME, 'fa-icon').click()
 
     return dic
-
 
 
 
@@ -431,62 +437,146 @@ def overView(id):
             description_text, value_chain_text, lastest_highlights, interesting_facts, year_of_found]
     browser.close()
 
-    select_all_nav_tag[0].click()
-    sleep(10)
 
-    find_all = browser.find_elements(
-        By.TAG_NAME, 'h1'
 
-    )[3:]
+def getAll():
+    res = get("https://api.production.standardsmap.sustainable-trade.org/api/standards?client=NO%20AFFILIATION").json()
 
-    for _ in find_all:
-        print(_.get_attribute("innerText"))
-        _.find_element(By.TAG_NAME, 'fa-icon').click()
-
-        sleep(4)
-
-        all_h3 = browser.find_elements(By.TAG_NAME, 'h3')
-
-        for __ in all_h3:
-            __.find_element(By.TAG_NAME, 'fa-icon').click()
-
-            print("\t" + __.get_attribute('innerText'))
-
-            select_each_column = browser.find_elements(
-                By.CSS_SELECTOR, ".d-flex.flex-nowrap.ng-star-inserted")
-
-            for column in select_each_column:
-
-                find_all_a = column.find_elements(
-                    By.TAG_NAME, "a")
-                find_all_a[-1].click()
-                sleep(2)
-
-                single_colum = column.get_attribute("innerText").split("\n")
-
-                print(single_colum)
-
-                first_4 = single_colum[:4]
-                with_out_4 = "\n".join([_ for _ in single_colum[4:] if _][:-1])
-
-                print(first_4)
-                print(with_out_4)
-
-                sleep(2)
-            # print("\t\t" +  str(len(select_data)))
-
-            sleep(4)
-
-            __.find_element(By.TAG_NAME, 'fa-icon').click()
-
-        _.find_element(By.TAG_NAME, 'fa-icon').click()
+    return res
 
 
 
 
 
-# print(overView(496))
-# requirements(496)
-# howToComply(496)
-# print(governance(496))
-print(resources(1000))
+data = ['1080',  '1090', '11', '112', '118', '119', '120', '120934', '124', '127', '128', '129', '13', '131', '136', '138', '139', '14', '140', '141', '142', '142369', '142370', '142371', '143', '144', '145', '145236', '146', '148', '150', '152', '153', '154', '155', '156', '15658', '15684', '15687', '15689', '157', '158', '159', '16', '160', '161', '163', '164', '165', '166', '16690', '167', '169', '170', '172', '173', '174', '175', '176', '177', '178', '179', '18', '181', '182', '184', '186', '187', '189', '19', '191919', '193', '194', '195', '196', '197', '2', '200', '200397', '200398', '201354', '202', '2020', '202720', '204', '2050', '206', '2099', '21', '211000', '21100101', '211005', '211006', '211007', '213', '214', '215', '234', '234568', '235', '236', '237', '239', '24', '241', '242', '243', '244', '245', '248', '249', '250', '254', '255', '256', '26', '260', '261', '263', '265', '267', '271118', '276', '278', '279', '282', '283', '284', '285', '287', '288', '291', '293', '294', '295', '297', '298', '299', '30', '301', '302', '31', '311', '314', '33', '331', '333', '338', '34', '340', '341', '342', '343', '344', '345', '347', '348', '3490', '3491', '35', '36', '364758', '365', '366', '37', '370', '379', '38', '380', '381', '384', '385', '386', '390', '391', '396', '40', '401', '4011', '402', '403', '405', '407', '408', '41', '4117', '416', '420', '422', '423', '425', '427', '428', '429', '4317', '434', '435', '436', '437', '438', '441', '4417', '442', '443', '444', '448', '45', '451', '45346', '459', '4596', '46', '462', '463', '464', '467', '468', '47', '470', '475987', '481', '482', '484', '485', '488', '49', '490', '494', '495', '496', '497', '498', '499', '5', '501', '503', '504', '510', '511', '512', '513', '516546', '519', '526', '527', '53', '535', '538', '539', '54', '547', '553', '555', '556', '558', '559', '56', '561', '562', '563', '564', '566', '567', '5673', '5697', '56972', '57', '58', '583', '59', '6', '60', '600', '61', '64', '647', '65', '67', '674', '677', '680', '685', '698', '7', '700', '701', '702', '707', '712', '7281', '7282', '7283', '729', '73', '730', '731', '732', '733', '734', '76', '767902', '777777', '78651', '789', '8013', '803', '8041', '8042', '8043', '8047', '8048', '8052', '859', '863', '868686', '870', '891', '897952', '898989', '9', '903', '905', '906', '907', '908', '91', '93268', '9367', '98379', '98731', '98759']
+
+
+
+for id in data:
+
+    wb =  Workbook()
+    wa = wb.active
+
+
+
+    print(id)
+
+    overview =  overView(id)
+    print("pass get overview")
+
+
+
+    howtocomply =  howToComply(id)
+    print("pass get howtoComply")
+   
+    requirement =  requirements(id)
+    print("pass get requirement")
+    _governance =  governance(id)
+    print("pass get governance")
+    _resources =  resources(id)
+    print("pass get resources")
+
+
+
+    
+    print("overview start")
+
+    wa.append(overview)
+
+    print("overview end")
+
+
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+    wa.append(["requirement"])
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+
+
+    print("requirement start")
+
+    for _ in requirement:
+
+        wa.append([_])
+
+        for __ in requirement[_]:
+
+            wa.append(["", __])
+
+            for ___ in requirement[_][__]:
+
+                wa.append(["", ""] + ___)
+
+    print("requirement end")
+    
+
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+    wa.append(["How to Comply"])
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+
+
+    print('howtocomply start ')
+
+    for _ in howtocomply:
+    
+        wa.append([_])
+      
+        if 'str' in  str(type(howtocomply[_])):
+
+            wa.append(["" ,  howtocomply[_]])
+        else: 
+            wa.append([" ", _  ])
+
+            for __ in howtocomply[_]:
+                wa.append( [" ",  " "] + __)
+
+    print('howtocomply end ')
+    
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+    wa.append(["Governance"])
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+
+    print('governance start')
+    for _ in _governance:
+
+        wa.append([_])
+
+        if 'list' in str(type(_governance[_])):
+
+            wa.append([""] + _governance[_])
+
+        else:
+            for __ in _governance[_]:
+                
+                wa.append(["",  __, _governance[_][__]])
+
+    print('governance end')
+
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+    wa.append(["Resources"])
+    wa.append([""])
+    wa.append([""])
+    wa.append([""])
+
+    print("resources start")
+    for _ in _resources:
+
+        wa.append(_)
+
+    print("resources end    ")
+    
+
+    wb.save(f'{id}.xlsx')
+
